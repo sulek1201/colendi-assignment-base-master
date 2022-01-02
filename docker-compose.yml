@@ -1,0 +1,36 @@
+version: "3.8"
+services:
+  colendi-database:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    volumes:
+      - colendi-db:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=1
+      - MYSQL_USER=colendi-admin
+      - MYSQL_PASSWORD=colendi-passw0rd
+      - MYSQL_DATABASE=colendi-case-dev
+    cap_add:
+      - CAP_SYS_NICE
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: 
+      - 9001:9001
+      - 35035:9229
+    command: npm run start:debug
+    volumes:
+      - logs:/home/node/app/logs
+      - ./src:/home/node/app/src:ro
+      - ./prisma:/home/node/app/prisma
+      - /home/node/app/node_modules
+    env_file: .env
+    restart: unless-stopped
+    depends_on:
+      - colendi-database
+
+volumes:
+  colendi-db:
+  logs:
+  
