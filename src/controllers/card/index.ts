@@ -28,7 +28,7 @@ export class CardController {
 
 
   @ApiResponse({ status: HttpStatus.OK })
-  @Get("gerCards")
+  @Get("getCards")
   async getCards(): Promise<Card[]> {
     const cards = await this.cardService.findAll();
     return cards;
@@ -44,6 +44,7 @@ export class CardController {
   @ApiResponse({ status: HttpStatus.OK })
   @Post("reIssueCards")
   async reIssueCards(@Body() dto: ReissueCardRequest): Promise<Card> {
+    //todo fields validation
     const cards = await this.cardService.reIssuedCard(dto);
     return cards;
   }

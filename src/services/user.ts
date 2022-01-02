@@ -29,7 +29,7 @@ export class UserService {
   }
 
   async verifyUser(dto: VerifyUserRequest): Promise<User> {
-    let user = await this.findById(dto.userId);
+    const user = await this.findById(dto.userId);
     user.isVerified = true;
     user.nationalId = dto.nationalId;
     return await this.userRepository.save(user);
