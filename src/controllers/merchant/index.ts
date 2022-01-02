@@ -11,6 +11,7 @@ import {
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { MerchantService } from '@services/merchant';
+import {CreateMerchantRequest} from "@controllers/merchant/dto";
 
 @ApiTags('Merchant')
 @UseInterceptors(ClassSerializerInterceptor)
@@ -18,10 +19,9 @@ import { MerchantService } from '@services/merchant';
 export class MerchantController {
   constructor(private readonly merchantservice: MerchantService) {}
 
-  // @todo replace any with dto you created
   @ApiResponse({ status: HttpStatus.OK })
   @Post()
-  async create(@Body() dto: any): Promise<Merchant> {
+  async create(@Body() dto: CreateMerchantRequest): Promise<Merchant> {
     const merchantResult = await this.merchantservice.createMerchant(dto);
     return merchantResult;
   }

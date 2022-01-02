@@ -17,8 +17,6 @@ export class CardTransaction extends BaseEntity {
     @Column()
     merchantId: string;
 
-    @OneToOne(() => Gpa)
-    gpa: Merchant;
 
     @Column({ nullable: false })
     cardToken: string;

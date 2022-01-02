@@ -1,5 +1,6 @@
 import { ApiProperty, ApiResponseProperty } from '@nestjs/swagger';
 import { IsNotEmpty, IsString } from 'class-validator';
+import {Long} from "typeorm";
 
 export class CreateCardRequest {
     @IsNotEmpty()
@@ -48,6 +49,15 @@ export class CreateCardRequest {
         example: '123',
     })
     userId: string;
+
+    @IsNotEmpty()
+    @ApiProperty({
+        name: 'amount',
+        nullable: false,
+        description: 'amount of card',
+        example: '1000',
+    })
+    amount: Long;
 }
 
 export class CancelCardRequest {

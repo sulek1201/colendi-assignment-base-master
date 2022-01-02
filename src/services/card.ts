@@ -4,17 +4,20 @@ import { Repository } from 'typeorm';
 import {Card} from "@entities/card";
 import {UsersCard} from "@entities/usersCard";
 import {CancelCardRequest, CreateCardRequest, ReissueCardRequest} from "@controllers/card/dto";
+import {CardTransaction} from "@entities/cardTransaction";
 
 @Injectable()
 export class CardService {
   constructor(
     @InjectRepository(Card) private readonly cardRepository: Repository<Card>,
     @InjectRepository(UsersCard) private readonly usersCardRepository: Repository<UsersCard>,
+    @InjectRepository(CardTransaction) private readonly cardTransactionRepository: Repository<CardTransaction>,
   ) {}
 
   async createCard(dto: CreateCardRequest): Promise<Card> {
     let card = new Card();
     const usersCard = new UsersCard();
+    const cardTransaction = new CardTransaction()
     card.cvv = dto.cvv;
     card.gpaId = dto.gpaId;
     card.pan = dto.pan;
@@ -23,6 +26,9 @@ export class CardService {
     usersCard.userId = dto.userId;
     usersCard.userId = card.token;
     await this.usersCardRepository.save(usersCard);
+    cardTransaction.amount = dto.amount;
+    cardTransaction.cardToken = card.token;
+    await this.cardTransactionRepository.save(cardTransaction);
     return card;
   }
 
