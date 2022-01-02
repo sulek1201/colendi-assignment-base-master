@@ -60,17 +60,7 @@ export class CreateCardRequest {
     amount: Long;
 }
 
-export class CancelCardRequest {
-    @IsNotEmpty()
-    @IsString()
-    @ApiProperty({
-        name: 'cardId',
-        description: 'card id of Card',
-        nullable: false,
-        example: '12',
-    })
-    cardId: string;
-}
+
 
 export class ReissueCardRequest {
     @IsNotEmpty()
@@ -103,4 +93,16 @@ export class ReissueCardRequest {
     })
     newExpiresAt: string;
 
+}
+
+export class CancelCardRequest {
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        name: 'cardId',
+        description: 'card id of Card',
+        nullable: false,
+        example: '12',
+    })
+    cardId: string;
 }

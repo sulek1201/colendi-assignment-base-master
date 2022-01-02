@@ -40,12 +40,6 @@ export class CardService {
     return await this.cardRepository.findOne({where: {id}});
   }
 
-  async cancelCard(dto: CancelCardRequest): Promise<Card> {
-    let card = await this.findById(dto.cardId);
-    card.status = false;
-    card = await this.cardRepository.save(card);
-    return card;
-  }
 
   async reIssuedCard(dto: ReissueCardRequest): Promise<Card> {
     const oldCard = await this.findById(dto.cardId);
@@ -55,5 +49,12 @@ export class CardService {
     updatedCard.expiresAt = dto.newExpiresAt;
     await this.cardRepository.update(oldCard.token, updatedCard);
     return updatedCard;
+  }
+
+  async cancelCard(dto: CancelCardRequest): Promise<Card> {
+    let card = await this.findById(dto.cardId);
+    card.status = false;
+    card = await this.cardRepository.save(card);
+    return card;
   }
 }
