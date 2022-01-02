@@ -14,4 +14,8 @@ export class UsersCardsService {
         return await this.usersCardsRepository.find({ where: { userId } });
     }
 
+    async getUsersCards(userId: string): Promise<UsersCard[]> {
+        return await this.findAll(userId);
+    }
+
 }

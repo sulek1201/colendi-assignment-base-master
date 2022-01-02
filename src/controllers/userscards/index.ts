@@ -23,7 +23,7 @@ export class UsersCardsController {
   @ApiResponse({ status: HttpStatus.OK })
   @Get("getUsersCards")
   async getUsersCards(@Body() userId:string): Promise<UsersCard[]> {
-    const usersCards = await this.usersCardsService.findAll(userId);
+    const usersCards = await this.usersCardsService.getUsersCards(userId);
     return usersCards;
   }
 
