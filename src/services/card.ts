@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import {Card} from "@entities/card";
 import {UsersCard} from "@entities/usersCard";
-import {CancelCardRequest, CreateCardRequest} from "@controllers/card/dto";
+import {CancelCardRequest, CreateCardRequest, ReissueCardRequest} from "@controllers/card/dto";
 
 @Injectable()
 export class CardService {
@@ -41,4 +41,13 @@ export class CardService {
     return card;
   }
 
+  async reIssuedCard(dto: ReissueCardRequest): Promise<Card> {
+    const oldCard = await this.findById(dto.cardId);
+    let updatedCard = new Card();
+    updatedCard = oldCard;
+    updatedCard.cvv = dto.newCvv;
+    updatedCard.expiresAt = dto.newExpiresAt;
+    await this.cardRepository.update(oldCard.token, updatedCard);
+    return updatedCard;
+  }
 }

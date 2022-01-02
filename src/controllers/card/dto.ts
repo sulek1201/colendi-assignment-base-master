@@ -61,3 +61,36 @@ export class CancelCardRequest {
     })
     cardId: string;
 }
+
+export class ReissueCardRequest {
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        name: 'cardId',
+        description: 'card id of Card',
+        nullable: false,
+        example: '12',
+    })
+    cardId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        name: 'newCvv',
+        description: 'new cvv of Card',
+        nullable: false,
+        example: '12',
+    })
+    newCvv: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        name: 'newExpiresAt',
+        description: 'new cvv of Card',
+        nullable: false,
+        example: '12',
+    })
+    newExpiresAt: string;
+
+}

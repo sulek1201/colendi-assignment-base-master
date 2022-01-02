@@ -10,7 +10,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
-import {CancelCardRequest, CreateCardRequest} from "@controllers/card/dto";
+import {CancelCardRequest, CreateCardRequest, ReissueCardRequest} from "@controllers/card/dto";
 import {CardService} from "@services/card";
 
 @ApiTags('Card')
@@ -38,6 +38,13 @@ export class CardController {
   @Post("cancelCard")
   async cancelCards(@Body() dto: CancelCardRequest): Promise<Card> {
     const cards = await this.cardService.cancelCard(dto);
+    return cards;
+  }
+
+  @ApiResponse({ status: HttpStatus.OK })
+  @Post("reIssueCards")
+  async reIssueCards(@Body() dto: ReissueCardRequest): Promise<Card> {
+    const cards = await this.cardService.reIssuedCard(dto);
     return cards;
   }
 }
